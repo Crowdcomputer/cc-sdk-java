@@ -4,7 +4,7 @@ cc-sdk-java
 The java sdk for the crowdcomputer APIs.
 See more on www.crowdcomputer.org
 
-Python version (which does much more) is [here][https://github.com/esseti/cc-sdk-python].
+Python version (which does much more) is [here](https://github.com/esseti/cc-sdk-python).
 
 
 ##What it does (or should do)
