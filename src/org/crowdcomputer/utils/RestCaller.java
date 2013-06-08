@@ -1,5 +1,6 @@
 package org.crowdcomputer.utils;
 
+import java.net.URI;
 import java.util.HashMap;
 
 import javax.ws.rs.client.Client;
@@ -7,8 +8,10 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.ClientRequestFilter;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,8 +28,8 @@ public class RestCaller {
 	 * 
 	 * @param auth
 	 */
-	public RestCaller(ClientRequestFilter auth) {
-		this.auth = auth;
+	public RestCaller(String app_token, String user_token) {
+		this.auth = new Auth(app_token,user_token);
 	}
 
 	/**
@@ -36,13 +39,13 @@ public class RestCaller {
 	 *            The URL to call.
 	 * @return The answer of the GET call: a JSONObject or JSONArray
 	 */
-	public Object getCall(String url) {
+	public Object getCall(URI uri) {
 		Client client = ClientBuilder.newClient();
-		WebTarget target = client.target(url);
+		WebTarget target = client.target(uri);
 		target.register(auth);
 		Response response = target.request(MediaType.APPLICATION_JSON_TYPE).get();
 
-		if (response.getStatus() != 200) {
+		if (response.getStatus()<200 || response.getStatus()>=300 ) {
 			log.debug("Error " + response.getStatus());
 			return Error.createError("HTTP error " + response.getStatus());
 		}
@@ -63,16 +66,16 @@ public class RestCaller {
 	 * @return The answer of the POST call: a JSONObject or JSONArray.
 	 */
 	@SuppressWarnings("unchecked")
-	public Object postCall(String url, HashMap<Object, Object> parameters) {
+	public Object postCall(URI uri, HashMap<Object, Object> parameters) {
 		Client client = ClientBuilder.newClient();
-		WebTarget target = client.target(url);
+		WebTarget target = client.target(uri);
 		target.register(auth);
 //		Form form = new Form(parameters);
 		JSONObject input = new JSONObject();   
 		input.putAll(parameters);
 		Response response = target.request(MediaType.APPLICATION_JSON_TYPE)
 			    .post(Entity.entity(input.toJSONString(),MediaType.APPLICATION_JSON_TYPE));
-		if (response.getStatus() != 200) {
+		if (response.getStatus()<200 || response.getStatus()>=300 ) {
 			log.debug("Error " + response.getStatus());
 			return Error.createError("HTTP error " + response.getStatus());
 		}
@@ -93,16 +96,16 @@ public class RestCaller {
 	 * @return The answer of the POST call: a JSONObject or JSONArray.
 	 */
 	@SuppressWarnings("unchecked")
-	public Object putCall(String url, HashMap<Object, Object> parameters) {
+	public Object putCall(URI uri, HashMap<Object, Object> parameters) {
 		Client client = ClientBuilder.newClient();
-		WebTarget target = client.target(url);
+		WebTarget target = client.target(uri);
 		target.register(auth);
 //		Form form = new Form(parameters);
 		JSONObject input = new JSONObject();   
 		input.putAll(parameters);
 		Response response = target.request(MediaType.APPLICATION_JSON_TYPE)
 			    .put(Entity.entity(input.toJSONString(),MediaType.APPLICATION_JSON_TYPE));
-		if (response.getStatus() != 200) {
+		if (response.getStatus()<200 || response.getStatus()>=300 ) {
 			log.debug("Error " + response.getStatus());
 			return Error.createError("HTTP error " + response.getStatus());
 		}
