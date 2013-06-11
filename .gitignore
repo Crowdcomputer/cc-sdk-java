@@ -1,1 +1,17 @@
 /bin
+
+*.class
+/target/cc-sdk-java-0.0.1-SNAPSHOT.jar
+/target/cc-sdk-java-0.0.1-SNAPSHOT/.gitignore
+/target/cc-sdk-java-0.0.1-SNAPSHOT/META-INF/MANIFEST.MF
+/target/classes/org/crowdcomputer/CroCoClient.class
+/target/classes/org/crowdcomputer/test/MyBaseTest.class
+/target/classes/org/crowdcomputer/test/Snipets.class
+/target/classes/org/crowdcomputer/utils/Auth.class
+/target/classes/org/crowdcomputer/utils/Error.class
+/target/classes/org/crowdcomputer/utils/RestCaller.class
+/target/classes/org/crowdcomputer/utils/staticvalues/Endpoints.class
+/target/classes/org/crowdcomputer/utils/staticvalues/Operations.class
+/target/classes/org/crowdcomputer/utils/staticvalues/Platforms.class
+/target/classes/org/crowdcomputer/utils/staticvalues/RewardPlatforms.class
+/target/classes/org/crowdcomputer/utils/staticvalues/Status.class
