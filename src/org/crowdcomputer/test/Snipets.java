@@ -1,13 +1,6 @@
 package org.crowdcomputer.test;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import org.crowdcomputer.utils.staticvalues.Endpoints;
 
 public class Snipets {
 
@@ -31,18 +24,34 @@ public class Snipets {
 
 	}
 
-	void foo(String... args) {
-		for (String arg : args) {
-		}
-		for (int i = 0; i < args.length - 1; i += 2) {
-			System.out.println("" + args[i] + " ," + args[i + 1]);
-		}
-	}
-
 	public static void main(String[] args) {
-		Snipets snipets = new Snipets();
-		snipets.pollingBheaviour("test");
-//		snipets.date("0y 0mo 0w 365d 0h 0m 0s");
+
+//		Properties prop = new Properties();
+//		try {
+//			// set the properties value
+//			prop.setProperty("croco_url", "http://localhost:8080");
+//
+//			// save properties to project root folder
+//			prop.store(new FileOutputStream("config.properties"), null);
+//
+//		} catch (IOException ex) {
+//			ex.printStackTrace();
+//		}
+		
+//		try {
+//			prop.load(new FileInputStream("config.properties"));
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		System.out.println(prop.getProperty("croco_url"));
+		System.out.println(Endpoints.DATA_MERGE);
+		System.out.println(Endpoints.DATA_SPLIT);
+		System.out.println(Endpoints.DATA_MERGE);
+
+		// Snipets snipets = new Snipets();
+		// snipets.pollingBheaviour("test");
+		// snipets.date("0y 0mo 0w 365d 0h 0m 0s");
 	}
 
 }

@@ -9,7 +9,6 @@ import java.util.HashMap;
 import javax.ws.rs.core.UriBuilder;
 
 import org.crowdcomputer.CroCoClient;
-import org.crowdcomputer.utils.Auth;
 import org.crowdcomputer.utils.RestCaller;
 import org.crowdcomputer.utils.staticvalues.Platforms;
 import org.hamcrest.Matchers;

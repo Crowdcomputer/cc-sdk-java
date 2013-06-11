@@ -79,12 +79,6 @@
 								<include>*.jar</include>
 							</includes>
 						</resource>
-						<resource>
-							<directory>${basedir}</directory>
-							<includes>
-								<include>croco-sdk.properties</include>
-							</includes>
-						</resource>
 					</resources>
 				</configuration>
 			</plugin>

@@ -85,10 +85,12 @@ public class CroCoClient {
 
 	}
 
-	public JSONObject splitData(String data, String operation) {
+	public JSONObject splitData(String data, String operation, int N, int M) {
 		HashMap<Object, Object> pars = new HashMap<Object, Object>();
 		pars.put("data", data);
 		pars.put("operation", operation);
+		pars.put("n", N);
+		pars.put("m", M);
 		return (JSONObject) caller.postCall(UriBuilder.fromUri(Endpoints.DATA_SPLIT).build(), pars);
 	}
 
