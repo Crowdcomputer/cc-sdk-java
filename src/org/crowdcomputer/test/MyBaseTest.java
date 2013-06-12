@@ -10,20 +10,23 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.crowdcomputer.CroCoClient;
 import org.crowdcomputer.utils.RestCaller;
+import org.crowdcomputer.utils.staticvalues.Operations;
 import org.crowdcomputer.utils.staticvalues.Platforms;
 import org.hamcrest.Matchers;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.junit.Test;
 
 
 public class MyBaseTest {
-
+	
+	private static String app_id = "8fb5f8646b994bb4937bfe55ec934f1d";
+	private static String user_id = "a441168a5d6afc6b0432342f55d024ac78b6fbed";
+	
 	@Test
 	public void testGetCorrect() {
 		// http://httpbin.org/ip
-		String app_id="a";
-		String user_id="b";
 		RestCaller rc = new RestCaller(app_id, user_id);
 		JSONObject obj =  (JSONObject) rc.getCall(UriBuilder.fromUri("http://httpbin.org/get").build());
 		JSONObject headers = (JSONObject) obj.get("headers");
@@ -36,8 +39,7 @@ public class MyBaseTest {
 	@Test
 	public void testGetWrong() {
 		// http://httpbin.org/ip
-		String app_id="a";
-		String user_id="b";
+
 		RestCaller rc = new RestCaller(app_id, user_id);
 		JSONObject obj =  (JSONObject) rc.getCall(UriBuilder.fromUri("http://httpbin.org/get").build());
 		assertThat("this test for app",""+obj.get("error"),Matchers.containsString("error"));
@@ -45,8 +47,7 @@ public class MyBaseTest {
 	
 	@Test
 	public void testPostCorrect(){
-		String app_id="a";
-		String user_id="b";
+
 		RestCaller rc = new RestCaller(app_id, user_id);
 		HashMap<Object, Object> mvhm = new HashMap<Object, Object>();
 		mvhm.put("test","test");
@@ -58,8 +59,7 @@ public class MyBaseTest {
 	
 	@Test
 	public void testPutCorrect(){
-		String app_id="a";
-		String user_id="b";
+
 		RestCaller rc = new RestCaller(app_id, user_id);
 		HashMap<Object, Object> mvhm = new HashMap<Object, Object>();
 		mvhm.put("test","test");
@@ -70,8 +70,7 @@ public class MyBaseTest {
 	}
 	@Test
 	public void testReward(){
-		String app_id="b88a23b3e50947179955fc8b7579c1bd	";
-		String user_id="6c4714e14abcaf3bdd2f7798b865f9c530d35b1b";
+		
 		CroCoClient cclient = new CroCoClient(app_id, user_id);
 		JSONObject obj = cclient.createReward("CCM", 1.0);
 		assertEquals(1.0,Double.parseDouble(""+obj.get("quantity")),0.0);	
@@ -79,8 +78,7 @@ public class MyBaseTest {
 	
 	@Test
 	public void testTask(){
-		String app_id="b88a23b3e50947179955fc8b7579c1bd";
-		String user_id="859848836298bd8ff7b9f106bf2aa1a30678f5c7";
+
 		CroCoClient cclient = new CroCoClient(app_id, user_id);
 		JSONObject obj_process = cclient.createProcess("process_api", "description");
 		Long pk = (Long) obj_process.get("id");
@@ -91,8 +89,7 @@ public class MyBaseTest {
 	}
 	@Test
 	public void testTaskWithoutDeadline(){
-		String app_id="9514e07816194cae9d0531aa5fbb9c9c	";
-		String user_id="859848836298bd8ff7b9f106bf2aa1a30678f5c7";
+
 		CroCoClient cclient = new CroCoClient(app_id, user_id);
 		JSONObject obj_process = cclient.createProcess("process_api", "description");
 		Long pk = (Long) obj_process.get("id");
@@ -101,13 +98,28 @@ public class MyBaseTest {
 	}
 	@Test
 	public void testStartTask(){
-		String app_id="8e60300e58924e898535ffa57155175f";
-		String user_id="6c4714e14abcaf3bdd2f7798b865f9c530d35b1b";
+
 		CroCoClient cclient = new CroCoClient(app_id, user_id);
-		JSONObject start_task = cclient.startTask(20L, "[]");
+		JSONObject start_task = cclient.startTask(20L, "[]","fakename");
 		System.out.println(start_task);
 		String result = ""+start_task.get("result");
 //		JSONObject obj_task = cclient.createCCTask(pk,"title", "description", null , 1, "http://example.com", 1.0, Platforms.CROWDCOMPUTER);
 		assertEquals("title is the same?","ok",result);	
+	}
+	
+	@Test
+	public void testSplit(){
+		CroCoClient cclient = new CroCoClient(app_id, user_id);
+		JSONArray data = new JSONArray();
+		for(int i=0;i<10;i++){
+			JSONObject jobj = new JSONObject();
+			jobj.put("id", i);
+			data.add(jobj);
+		}
+		JSONObject rest = cclient.splitData(data.toJSONString(), Operations.SPLIT_N, "2", "0");		
+		String result = ""+rest.get("result");
+		System.out.println(result);
+//		JSONObject obj_task = cclient.createCCTask(pk,"title", "description", null , 1, "http://example.com", 1.0, Platforms.CROWDCOMPUTER);
+		assertEquals("title is the same?","ok","ok");	
 	}
 }

@@ -85,7 +85,7 @@ public class CroCoClient {
 
 	}
 
-	public JSONObject splitData(String data, String operation, int N, int M) {
+	public JSONObject splitData(String data, String operation, String N, String M) {
 		HashMap<Object, Object> pars = new HashMap<Object, Object>();
 		pars.put("data", data);
 		pars.put("operation", operation);
@@ -117,10 +117,11 @@ public class CroCoClient {
 		return Error.createError("not implmented yet");
 	}
 
-	public JSONObject startTask(Long id, String data) {
+	public JSONObject startTask(Long id, String data, String name) {
 //		string or json?
 		HashMap<Object, Object> pars = new HashMap<Object, Object>();
 		pars.put("data", ((JSONArray) JSONValue.parse(data)));
+		pars.put("name",name);
 		return (JSONObject) caller.putCall(UriBuilder.fromUri(Endpoints.TASK_START).build(id), pars);
 	}
 
