@@ -3,6 +3,7 @@ package org.crowdcomputer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.ws.rs.core.UriBuilder;
 
@@ -12,6 +13,7 @@ import org.crowdcomputer.utils.Error;
 import org.crowdcomputer.utils.RestCaller;
 import org.crowdcomputer.utils.staticvalues.Endpoints;
 import org.crowdcomputer.utils.staticvalues.Platforms;
+import org.crowdcomputer.utils.staticvalues.RewardPlatforms;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -42,10 +44,12 @@ public class CroCoClient {
 
 	}
 
+	
+	@SuppressWarnings("unchecked")
 	private JSONObject createHumanTask(Long process, String title,
 			String description, Date deadline, Integer number_of_instances,
 			String page_url, String platform, Double reward,
-			String reward_platform) {
+			String reward_platform, @SuppressWarnings("rawtypes") HashMap parameters) {
 		
 		JSONObject reward_json = createReward(reward_platform, reward);
 		Long id_reward = (Long) reward_json.get("id");
@@ -60,7 +64,14 @@ public class CroCoClient {
 		}
 		pars.put("number_of_instances", number_of_instances);
 		pars.put("page_url", page_url);
-
+		pars.put("platform", platform);
+		if (parameters !=null){
+			JSONObject parameters_json = new JSONObject();
+			parameters_json.putAll(parameters);
+			pars.put("parameters",parameters_json.toJSONString());
+		}else
+			pars.put("parameters","{}");
+		
 		return (JSONObject) caller.postCall(
 				UriBuilder.fromUri(Endpoints.CCTASK_CREATE).build(process),
 				pars);
@@ -68,20 +79,20 @@ public class CroCoClient {
 
 	public JSONObject createCCTask(Long process, String title,
 			String description, Date deadline, Integer number_of_instances,
-			String page_url, Double reward, String reward_platform) {
+			String page_url, Double reward, String reward_platform, HashMap pars) {
 
 		return createHumanTask(process, title, description, deadline,
 				number_of_instances, page_url, Platforms.CROWDCOMPUTER, reward,
-				reward_platform);
+				reward_platform, pars);
 
 	}
 
 	public JSONObject createAMTTask(Long process, String title,
 			String description, Date deadline, Integer number_of_instances,
-			String page_url, Double reward, String reward_platform) {
+			String page_url, Double reward,HashMap pars) {
 		return createHumanTask(process, title, description, deadline,
 				number_of_instances, page_url,
-				Platforms.AMAZON_MECHANICAL_TURK, reward, reward_platform);
+				Platforms.AMAZON_MECHANICAL_TURK, reward, RewardPlatforms.DOLLARS,pars);
 
 	}
 
@@ -91,6 +102,7 @@ public class CroCoClient {
 		pars.put("operation", operation);
 		pars.put("n", N);
 		pars.put("m", M);
+		log.debug("data is : " + data);
 		return (JSONObject) caller.postCall(UriBuilder.fromUri(Endpoints.DATA_SPLIT).build(), pars);
 	}
 
@@ -100,22 +112,43 @@ public class CroCoClient {
 		pars.put("field", field);
 		return (JSONObject) caller.postCall(UriBuilder.fromUri(Endpoints.DATA_MERGE).build(), pars);
 	}
-
-
-	public JSONObject filterData() {
-		// TODO: implement
-		return Error.createError("not implmented yet");
+	
+	@SuppressWarnings("unchecked")
+	public JSONObject splitObject(String data, List<String> shared,  List<String> fields) {
+		HashMap<Object, Object> pars = new HashMap<Object, Object>();
+		pars.put("data", data);
+		JSONArray fiedls_js = new JSONArray();
+		fiedls_js.addAll(fields);
+		pars.put("fields", fiedls_js.toJSONString());
+		JSONArray shared_js = new JSONArray();
+		shared_js.addAll(shared);
+		pars.put("shared", shared_js);
+		return (JSONObject) caller.postCall(UriBuilder.fromUri(Endpoints.OBJECT_SPLIT).build(), pars);
+	}
+	
+	public JSONObject mergeObject(String data, String field) {
+		HashMap<Object, Object> pars = new HashMap<Object, Object>();
+		pars.put("data", data);
+		pars.put("field", field);
+		return (JSONObject) caller.postCall(UriBuilder.fromUri(Endpoints.OBJECT_MERGE).build(), pars);
 	}
 
-	public JSONObject splitObject() {
-		// TODO: implement
-		return Error.createError("not implmented yet");
+	@SuppressWarnings("unchecked")
+	public JSONObject filterData(String data, String field, String operator, String value) {
+		HashMap<Object, Object> pars = new HashMap<Object, Object>();
+		pars.put("data", data);
+		HashMap<Object, Object> condition = new HashMap<Object, Object>();
+		condition.put("field", field);
+		condition.put("operator", operator);
+		condition.put("value",value);
+		JSONArray conditions = new JSONArray();
+		JSONObject condition_js = new JSONObject();
+		condition_js.putAll(condition);
+		conditions.add(condition_js);
+		pars.put("conditions", conditions.toJSONString());
+		return  (JSONObject) caller.postCall(UriBuilder.fromUri(Endpoints.DATA_FILTER).build(), pars);
 	}
 
-	public JSONObject filterObject() {
-		// TODO: implement
-		return Error.createError("not implmented yet");
-	}
 
 	public JSONObject startTask(Long id, String data, String name) {
 //		string or json?

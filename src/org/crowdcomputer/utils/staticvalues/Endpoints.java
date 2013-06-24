@@ -16,6 +16,10 @@ public class Endpoints {
 	// public static String AMTTASK_CREATE = CROCO + "task/turk/create/";
 	public static String DATA_MERGE = CROCO + "task/data/merge/";
 	public static String DATA_SPLIT = CROCO + "task/data/split/";
+	public static String DATA_FILTER = CROCO + "task/data/filter/";
+	public static String OBJECT_SPLIT = CROCO + "task/object/split/";
+	public static String OBJECT_MERGE = CROCO + "task/object/merge/";
+
 	public static String REWARD_CREATE = CROCO + "reward/create/";
 	public static String TASK_START = CROCO + "task/{arg1}/start/";
 	public static String TASK_STATUS = CROCO + "task/{arg1}/status/";
