@@ -22,8 +22,11 @@ import org.junit.Test;
 
 public class MyBaseTest {
 
-	private static String app_id = "8fb5f8646b994bb4937bfe55ec934f1d";
-	private static String user_id = "a441168a5d6afc6b0432342f55d024ac78b6fbed";
+//	private static String app_id = "a5b1048e6f4d427e8a377842089d8cf5";
+//	private static String user_id = "319e324ecc2f6a03cebf1fc0bffb7975b5170363";
+//	localhost	
+		private static String app_id = "f60631c317314e83b60e34e794a5e1ea";
+		private static String user_id = "9ffbf2cab98065bcc81d1dfb4e1dbb1f344990dc";
 
 	@Test
 	public void testGetCorrect() {
@@ -81,7 +84,7 @@ public class MyBaseTest {
 	public void testReward() {
 
 		CroCoClient cclient = new CroCoClient(app_id, user_id);
-		JSONObject obj = cclient.createReward("CCM", 1.0);
+		JSONObject obj = cclient.createReward("CCM", 1.0,"ALL");
 		assertEquals(1.0, Double.parseDouble("" + obj.get("quantity")), 0.0);
 	}
 
@@ -95,10 +98,17 @@ public class MyBaseTest {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DAY_OF_MONTH, 7);
 		HashMap pars = new HashMap();
+		ArrayList<String> emails = new ArrayList<String>();
+		emails.add("ste@me.com");
+		emails.add("me@am.com");
+		emails.add("me@am1.com");
+		emails.add("me@am2.com");
+		emails.add("me@am3.com");
 		pars.put("test", "test");
+		pars.put("emails", emails);
 		JSONObject obj_task = cclient.createCCTask(pk, "title", "description",
 				cal.getTime(), 1, "http://example.com", 1.0,
-				Platforms.CROWDCOMPUTER,pars);
+				Platforms.CROWDCOMPUTER, "ALL", null, pars);
 		assertEquals("title is the same?", "title", obj_task.get("title"));
 	}
 
@@ -113,7 +123,8 @@ public class MyBaseTest {
 		cal.add(Calendar.DAY_OF_MONTH, 7);
 		JSONObject obj_task = cclient.createAMTTask(pk, "DEV: CROCO2",
 				"description", cal.getTime(), 1,
-				"http://disi.unitn.it/~tranquillini/mturk/index.html", 1.0,null);
+				"http://disi.unitn.it/~tranquillini/mturk/index.html", 1.0, "ALL", null,
+				null);
 		// JSONObject start_task =
 		// cclient.startTask(Long.getLong(""+obj_task.get("id")),
 		// "[]","fakename");
@@ -132,7 +143,8 @@ public class MyBaseTest {
 				"description");
 		Long pk = (Long) obj_process.get("id");
 		JSONObject obj_task = cclient.createCCTask(pk, "title", "description",
-				null, 1, "http://example.com", 1.0, Platforms.CROWDCOMPUTER, null);
+				null, 1, "http://example.com", 1.0, Platforms.CROWDCOMPUTER, "ALL", null,
+				null);
 		assertEquals("title is the same?", "title", obj_task.get("title"));
 	}
 
@@ -182,10 +194,40 @@ public class MyBaseTest {
 		List<String> fields = new ArrayList<String>();
 		fields.add("a");
 
-		JSONObject rest = cclient.splitObject(data.toJSONString(),shared,fields);
+		JSONObject rest = cclient.splitObject(data.toJSONString(), shared,
+				fields);
 		String result = "" + rest.get("result");
 		// JSONObject obj_task = cclient.createCCTask(pk,"title", "description",
 		// null , 1, "http://example.com", 1.0, Platforms.CROWDCOMPUTER);
 		assertEquals("no control here", "ok", "ok");
+	}
+
+	@Test
+	public void testJoinObject() {
+		CroCoClient cclient = new CroCoClient(app_id, user_id);
+		JSONArray data1 = new JSONArray();
+		JSONArray data2 = new JSONArray();
+		for (int i = 0; i < 10; i++) {
+			JSONObject jobj = new JSONObject();
+			jobj.put("id", i);
+			jobj.put("a", i);
+			jobj.put("b", i);
+			data1.add(jobj);
+		}
+		for (int i = 0; i < 10; i++) {
+			JSONObject jobj = new JSONObject();
+			jobj.put("id", i);
+			jobj.put("c", i);
+			jobj.put("b", i+1);
+			data1.add(jobj);
+		}
+		for (int i = 0; i < data2.size(); i++) {
+			data1.add(data2.get(i));
+
+		}
+		JSONObject rest = cclient.joinObject(data1.toJSONString(), "id");
+		System.out.println(rest);
+		assertEquals("no control here", "ok", "ok");
+
 	}
 }

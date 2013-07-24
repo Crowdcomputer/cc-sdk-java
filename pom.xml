@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.crowdcomputer.sdk</groupId>
 	<artifactId>cc-sdk-java</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.0</version>
 	<properties>
 		<tomcat>/Users/stefanotranquillini/sw/activiti/tomcat</tomcat>
 	</properties>

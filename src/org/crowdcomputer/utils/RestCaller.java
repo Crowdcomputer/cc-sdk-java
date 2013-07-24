@@ -79,7 +79,7 @@ public class RestCaller {
 		}
 		String output = "" + response.readEntity(String.class);
 		Object json_output = JSONValue.parse(output);
-		log.debug("Output " + json_output);
+		log.debug("Output " + json_output.toString());
 		return json_output;
 	}
 	

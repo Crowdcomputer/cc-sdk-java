@@ -2,12 +2,14 @@ package org.crowdcomputer.utils.staticvalues;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class Endpoints {
-//	private static final Properties prop = loadProperties();
-//	public static String CROCO = prop.getProperty("croco.base.url", "");
+	// private static final Properties prop = loadProperties();
+	// public static String CROCO = prop.getProperty("croco.base.url", "");
 	public static String CROCO = "http://localhost:8000/api/";
 
 	public static String PROCESS_CREATE = CROCO + "process/create/";
@@ -24,36 +26,41 @@ public class Endpoints {
 	public static String TASK_START = CROCO + "task/{arg1}/start/";
 	public static String TASK_STATUS = CROCO + "task/{arg1}/status/";
 	public static String TASK_RESULTS = CROCO + "task/{arg1}/results/";
+	public static String VALIDATE = CROCO + "taskinstance/{arg1}/validate/";
 
-//	private static final Properties loadProperties() {
-//		System.out.println("load");
-//		Properties testProperties = new Properties();
-//		FileInputStream testPropertiesInput;
-//		try {
-//			testPropertiesInput = new FileInputStream("./croco-sdk.properties");
-//			if (null != testPropertiesInput) {
-//				try {
-//					try {
-//						testProperties.load(testPropertiesInput);
-//					} catch (IOException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//				} finally {
-//					try {
-//						testPropertiesInput.close();
-//					} catch (IOException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//				}
-//			}
-//		} catch (FileNotFoundException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-//		return testProperties;
-//
-//	}
+	// private static final Properties loadProperties() {
+	//
+	// Properties testProperties = new Properties();
+	// InputStream testPropertiesInput;
+	// try {
+	//
+	//
+	// testPropertiesInput =
+	// Endpoints.class.getResourceAsStream("/croco-sdk.properties");
+	// if (null != testPropertiesInput) {
+	// try {
+	// try {
+	// testProperties.load(testPropertiesInput);
+	// } catch (IOException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// } finally {
+	// try {
+	// testPropertiesInput.close();
+	// } catch (IOException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// }
+	// }
+	// } catch (Exception e1) {
+	// // TODO Auto-generated catch block
+	// e1.printStackTrace();
+	// testProperties.setProperty("croco.base.url", "http://localhost:8080/");
+	// }
+	// return testProperties;
+	//
+	// }
 
 }
