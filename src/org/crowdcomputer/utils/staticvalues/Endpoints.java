@@ -10,8 +10,8 @@ import java.util.Properties;
 public class Endpoints {
 	// private static final Properties prop = loadProperties();
 	// public static String CROCO = prop.getProperty("croco.base.url", "");
-	public static String CROCO = "http://localhost:8000/api/";
-
+//	public static String CROCO = "http://localhost:8000/api/";
+	public static String CROCO = "http://www.crowdcomputer.org/api/";
 	public static String PROCESS_CREATE = CROCO + "process/create/";
 	public static String CCTASK_CREATE = CROCO
 			+ "process/{arg1}/task/human/create/";
