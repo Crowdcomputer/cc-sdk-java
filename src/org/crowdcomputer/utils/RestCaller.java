@@ -49,8 +49,14 @@ public class RestCaller {
 		}
 		String output = "" + response.readEntity(String.class);
 		Object json_output = JSONValue.parse(output);
-		log.debug("Output " + json_output);
-		return json_output;
+        if (json_output!=null) {
+            log.debug("Output " + json_output.toString());
+            return json_output;
+        }
+        else {
+            log.debug("Output empty, code is {}", response.getStatus());
+            return JSONValue.parse("{}");
+        }
 
 	}
 
@@ -79,8 +85,15 @@ public class RestCaller {
 		}
 		String output = "" + response.readEntity(String.class);
 		Object json_output = JSONValue.parse(output);
-		log.debug("Output " + json_output.toString());
-		return json_output;
+        if (json_output!=null) {
+            log.debug("Output " + json_output.toString());
+            return json_output;
+        }
+        else {
+            log.debug("Output empty, code is {}", response.getStatus());
+            return JSONValue.parse("{}");
+        }
+
 	}
 	
 
@@ -109,7 +122,13 @@ public class RestCaller {
 		}
 		String output = "" + response.readEntity(String.class);
 		Object json_output = JSONValue.parse(output);
-		log.debug("Output " + json_output);
-		return json_output;
+        if (json_output!=null) {
+            log.debug("Output " + json_output.toString());
+            return json_output;
+        }
+        else {
+            log.debug("Output empty, code is {}", response.getStatus());
+            return JSONValue.parse("{}");
+        }
 	}
 }

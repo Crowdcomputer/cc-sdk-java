@@ -31,7 +31,7 @@ public class CroCoClient {
         HashMap<Object, Object> pars = new HashMap<Object, Object>();
         pars.put("title", title);
         pars.put("description", description);
-        pars.put("parameters",JSONValue.parse("{}").toString());
+        pars.put("parameters", JSONValue.parse("{}").toString());
         return (JSONObject) caller.postCall(
                 UriBuilder.fromUri(Endpoints.PROCESS_CREATE).build(), pars);
     }
@@ -218,6 +218,7 @@ public class CroCoClient {
         return (JSONObject) caller.postCall(
                 UriBuilder.fromUri(Endpoints.T_TASK_STOP).build(id), pars);
     }
+
     public JSONObject finishTaskTactic(Long id) {
         // string or json?
         HashMap<Object, Object> pars = new HashMap<Object, Object>();
@@ -226,17 +227,17 @@ public class CroCoClient {
     }
 
     //it wants a json object
-    public JSONObject createInstance(Long id, String data, HashMap<String,String> in_parameters) {
+    public JSONObject createInstance(Long id, String data, HashMap<String, String> in_parameters) {
         // string or json?
         HashMap<Object, Object> pars = new HashMap<Object, Object>();
         log.debug("data {} -> {}", data, JSONValue.parse(data));
 
         pars.put("input", ((JSONArray) JSONValue.parse(data)).toJSONString());
         JSONObject parameters = new JSONObject();
-        for (Map.Entry<String, String> entry : in_parameters.entrySet()){
-            parameters.put(entry.getKey(),entry.getValue());
+        for (Map.Entry<String, String> entry : in_parameters.entrySet()) {
+            parameters.put(entry.getKey(), entry.getValue());
         }
-        pars.put("parameters",parameters);
+        pars.put("parameters", parameters);
 
         return (JSONObject) caller.postCall(
                 UriBuilder.fromUri(Endpoints.T_INSTANCE).build(id), pars);
@@ -260,10 +261,19 @@ public class CroCoClient {
     public JSONObject setQuality(Long idtask, Long idinstance, int value) {
         // string or json?
         HashMap<Object, Object> pars = new HashMap<Object, Object>();
-        pars.put("value",value);
+        pars.put("value", value);
         return (JSONObject) caller.postCall(
                 UriBuilder.fromUri(Endpoints.T_QUALITY_SET).build(idtask, idinstance), pars);
     }
+
+    public JSONObject assignInstance(Long idtask, Long idinstance, long worker) {
+        // string or json?
+        HashMap<Object, Object> pars = new HashMap<Object, Object>();
+        pars.put("worker", worker);
+        return (JSONObject) caller.postCall(
+                UriBuilder.fromUri(Endpoints.T_INSTANCE_ASSIGN).build(idtask, idinstance), pars);
+    }
+
     public JSONObject getQuality(Long idtask, Long idinstance) {
         // string or json?
         HashMap<Object, Object> pars = new HashMap<Object, Object>();
@@ -278,11 +288,28 @@ public class CroCoClient {
         return (JSONObject) caller.postCall(
                 UriBuilder.fromUri(Endpoints.T_REWARD_REJECT).build(idtask, idinstance), pars);
     }
+
     public JSONObject giveReward(Long idtask, Long idinstance) {
         // string or json?
         HashMap<Object, Object> pars = new HashMap<Object, Object>();
         return (JSONObject) caller.postCall(
                 UriBuilder.fromUri(Endpoints.T_REWARD_GIVE).build(idtask, idinstance), pars);
+    }
+
+    public JSONObject process_validation(Long idtask, Long idinstance, String process) {
+        // string or json?
+        HashMap<Object, Object> pars = new HashMap<Object, Object>();
+        pars.put("process", process);
+        return (JSONObject) caller.postCall(
+                UriBuilder.fromUri(Endpoints.T_PROCESS_VALIDATION).build(idtask, idinstance), pars);
+    }
+
+    public JSONObject process_reward(Long idtask, Long idinstance, String process) {
+        // string or json?
+        HashMap<Object, Object> pars = new HashMap<Object, Object>();
+        pars.put("process", process);
+        return (JSONObject) caller.postCall(
+                UriBuilder.fromUri(Endpoints.T_PROCESS_REWARD).build(idtask, idinstance), pars);
     }
 
 }

@@ -31,10 +31,15 @@ public class Endpoints {
     public static String T_INSTANCE = T_CROCO + "task/{arg1}/instance/";
     public static String T_INSTANCE_START = T_CROCO + "task/{arg1}/instance/{arg2}/start/";
     public static String T_INSTANCE_STOP = T_CROCO + "task/{arg1}/instance/{arg2}/stop/";
+    public static String T_INSTANCE_ASSIGN = T_CROCO + "task/{arg1}/instance/{arg2}/assign/";
     public static String T_QUALITY_SET = T_CROCO + "task/{arg1}/instance/{arg2}/quality_set/";
     public static String T_QUALITY_GET = T_CROCO + "task/{arg1}/instance/{arg2}/quality_get/";
     public static String T_REWARD_REJECT = T_CROCO + "task/{arg1}/instance/{arg2}/reward_reject/";
     public static String T_REWARD_GIVE = T_CROCO + "task/{arg1}/instance/{arg2}/reward_give/";
+    public static String T_PROCESS_VALIDATION = T_CROCO + "task/{arg1}/instance/{arg2}/process_validation/";
+    public static String T_PROCESS_REWARD = T_CROCO + "task/{arg1}/instance/{arg2}/process_reward/";
+
+
     // private static final Properties loadProperties() {
     //
     // Properties testProperties = new Properties();
