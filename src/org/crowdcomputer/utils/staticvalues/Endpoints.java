@@ -2,9 +2,10 @@ package org.crowdcomputer.utils.staticvalues;
 
 public class Endpoints {
     // private static final Properties prop = loadProperties();
-    // public static String CROCO = prop.getProperty("croco.base.url", "");
-    public static String CROCO = "http://localhost:8000/api/";
-    //	public static String CROCO = "http://new.crowdcomputer.org/api/";
+//    public static String CROCO_BASE = "http://localhost/";
+    public static String CROCO_BASE = "http://localhost:8000/";
+//    public static String CROCO_BASE = "http://new.crowdcomputer.org/" ;
+    public static String CROCO =   CROCO_BASE +    "api/";
     public static String PROCESS_CREATE = CROCO + "process/create/";
     public static String CCTASK_CREATE = CROCO
             + "process/{arg1}/task/human/create/";
@@ -22,12 +23,13 @@ public class Endpoints {
     public static String VALIDATE = CROCO + "taskinstance/{arg1}/validate/";
 
 
-    public static String T_CROCO = "http://localhost:8000/api2/";
+    public static String T_CROCO = CROCO_BASE + "api2/";
 
     //    public static String T_CROCO = "http://new.crowdcomputer.org/api2/";
     public static String T_TASK_START = T_CROCO + "task/{arg1}/start/";
     public static String T_TASK_STOP = T_CROCO + "task/{arg1}/stop/";
     public static String T_TASK_FINISH = T_CROCO + "task/{arg1}/finish/";
+    public static String T_TASK_REWARD = T_CROCO + "task/{arg1}/reward/";
     public static String T_INSTANCE = T_CROCO + "task/{arg1}/instance/";
     public static String T_INSTANCE_START = T_CROCO + "task/{arg1}/instance/{arg2}/start/";
     public static String T_INSTANCE_STOP = T_CROCO + "task/{arg1}/instance/{arg2}/stop/";

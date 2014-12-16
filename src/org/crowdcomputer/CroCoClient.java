@@ -205,9 +205,10 @@ public class CroCoClient {
 
     }
 
-    public JSONObject startTaskTactic(Long id) {
+    public JSONObject startTaskTactic(Long id, String data) {
         // string or json?
         HashMap<Object, Object> pars = new HashMap<Object, Object>();
+        pars.put("data", ((JSONArray) JSONValue.parse(data)).toJSONString());
         return (JSONObject) caller.postCall(
                 UriBuilder.fromUri(Endpoints.T_TASK_START).build(id), pars);
     }
@@ -310,6 +311,15 @@ public class CroCoClient {
         pars.put("process", process);
         return (JSONObject) caller.postCall(
                 UriBuilder.fromUri(Endpoints.T_PROCESS_REWARD).build(idtask, idinstance), pars);
+    }
+
+    public JSONObject reward_task(Long idtask, String type, int threshold) {
+        // string or json?
+        HashMap<Object, Object> pars = new HashMap<Object, Object>();
+        pars.put("type", type);
+        pars.put("threshold",threshold);
+        return (JSONObject) caller.postCall(
+                UriBuilder.fromUri(Endpoints.T_TASK_REWARD).build(idtask), pars);
     }
 
 }
